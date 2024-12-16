@@ -1,12 +1,18 @@
 import mongoose from 'mongoose';
 import Pokemon from '../models/PokemonModel.js';
 import PokemonType from '../models/PokemonTypeModel.js';
-import pokemonData from '../data/pokemons.json' assert { type: "json" };
-import typeData from '../data/types.json' assert { type: "json" };
+import fs from 'fs/promises';
 
 
 const initializeData = async () => {
   try {
+    const pokemonData = JSON.parse(
+      await fs.readFile(new URL('../data/pokemons.json', import.meta.url))
+    );
+
+    const typeData = JSON.parse(
+      await fs.readFile(new URL('../data/pokemons.json', import.meta.url))
+    );
     console.log('start init');
     if (mongoose.connection.readyState !== 1) {
       throw new Error('Не вдалося підключитись до бази даних');
@@ -19,25 +25,25 @@ const initializeData = async () => {
       console.log('Ініціалізація даних покемонів...');
 
       const filtredPokemonsArray = pokemonData
-      .filter(pokemon => {
-        const hasAllFields =
-          pokemon.id &&
-          pokemon.name?.english &&
-          pokemon.type &&
-          pokemon.base?.HP &&
-          pokemon.base?.Attack &&
-          pokemon.base?.Defense &&
-          pokemon.base?.Speed &&
-          pokemon.image?.sprite &&
-          pokemon.image?.thumbnail &&
-          pokemon.image?.hires;
-    
-        if (!hasAllFields) {
-          console.warn(`Пропускаємо покемона з ID: ${pokemon.id || 'невідомо'}, через відсутність полів.`);
-        }
-    
-        return hasAllFields;
-      });
+        .filter(pokemon => {
+          const hasAllFields =
+            pokemon.id &&
+            pokemon.name?.english &&
+            pokemon.type &&
+            pokemon.base?.HP &&
+            pokemon.base?.Attack &&
+            pokemon.base?.Defense &&
+            pokemon.base?.Speed &&
+            pokemon.image?.sprite &&
+            pokemon.image?.thumbnail &&
+            pokemon.image?.hires;
+
+          if (!hasAllFields) {
+            console.warn(`Пропускаємо покемона з ID: ${pokemon.id || 'невідомо'}, через відсутність полів.`);
+          }
+
+          return hasAllFields;
+        });
 
       const formattedPokemons = filtredPokemonsArray.map(pokemon => ({
         id: pokemon.id,
