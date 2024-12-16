@@ -24,7 +24,7 @@ const initializeData = async () => {
     } else {
       console.log('Ініціалізація даних покемонів...');
 
-      const filtredPokemonsArray = pokemonData
+      const filtredPokemonsArray = await pokemonData
         .filter(pokemon => {
           const hasAllFields =
             pokemon.id &&
@@ -70,7 +70,7 @@ const initializeData = async () => {
     if (existingTypeCount === 0) {
       console.log('Ініціалізація даних типів покемонів...');
 
-      const formattedTypes = typeData.map(type => ({
+      const formattedTypes = await typeData.map(type => ({
         english: type.english,
         effective: type.effective,
         ineffective: type.ineffective,
