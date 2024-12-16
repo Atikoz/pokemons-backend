@@ -77,7 +77,7 @@ const initializeData = async () => {
         no_effect: type.no_effect,
       }));
 
-      console.log(formattedTypes)
+      console.log(typeData)
 
       await PokemonType.insertMany(formattedTypes);
       console.log('Дані про типи покемонів успішно збережено!');
