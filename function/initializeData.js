@@ -83,7 +83,7 @@ const initializeData = async () => {
       console.log('Дані типів покемонів уже існують у базі.');
     }
   } catch (error) {
-    console.error('Помилка при ініціалізації даних:', error.message);
+    console.error('Помилка при ініціалізації даних:', error);
   }
 };
 
