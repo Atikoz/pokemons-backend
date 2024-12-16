@@ -11,7 +11,7 @@ const initializeData = async () => {
     );
 
     const typeData = JSON.parse(
-      await fs.readFile(new URL('../data/pokemons.json', import.meta.url))
+      await fs.readFile(new URL('../data/types.json', import.meta.url))
     );
     console.log('start init');
     if (mongoose.connection.readyState !== 1) {
@@ -76,8 +76,6 @@ const initializeData = async () => {
         ineffective: type.ineffective,
         no_effect: type.no_effect,
       }));
-
-      console.log(typeData)
 
       await PokemonType.insertMany(formattedTypes);
       console.log('Дані про типи покемонів успішно збережено!');
